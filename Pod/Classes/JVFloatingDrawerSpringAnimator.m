@@ -127,13 +127,13 @@ static const CGFloat kJVCenterViewDestinationScale = 0.7;
     CGFloat centerViewHorizontalOffset = direction * sideWidth;
     CGFloat scaledCenterViewHorizontalOffset = direction * (sideWidth - (centerWidth - kJVCenterViewDestinationScale * centerWidth) / 2.0);
     
-    CGAffineTransform sideTranslate = CGAffineTransformMakeTranslation(centerViewHorizontalOffset, 0.0);
-    sideView.transform = sideTranslate;
+    CATransform3D sideTranslate3D = CATransform3DMakeTranslation(centerViewHorizontalOffset, 0.0, 0.0);
+    sideView.layer.transform = sideTranslate3D;
     
+    CATransform3D centerTranslate3D = CATransform3DMakeTranslation(scaledCenterViewHorizontalOffset, 0.0, 0.0);
+    CATransform3D centerScale3D = CATransform3DMakeScale(kJVCenterViewDestinationScale, kJVCenterViewDestinationScale, 1.0);
     
-    CGAffineTransform centerTranslate = CGAffineTransformMakeTranslation(scaledCenterViewHorizontalOffset, 0.0);
-    CGAffineTransform centerScale = CGAffineTransformMakeScale(kJVCenterViewDestinationScale, kJVCenterViewDestinationScale);
-    centerView.transform = CGAffineTransformConcat(centerScale, centerTranslate);
+    centerView.layer.transform = CATransform3DConcat(centerScale3D, centerTranslate3D);
 }
 
 - (void)removeTransformsWithSide:(JVFloatingDrawerSide)drawerSide sideView:(UIView *)sideView centerView:(UIView *)centerView {
